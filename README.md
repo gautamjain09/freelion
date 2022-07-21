@@ -1,6 +1,6 @@
 # freelion
 
-A new Flutter project.
+Search Engine App
 
 ## Getting Started
 
