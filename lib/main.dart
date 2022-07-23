@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freelion/Layout/mobile_screen_layout.dart';
 import 'package:freelion/Layout/web_screen_layout.dart';
+import 'package:freelion/Screens/search_screen.dart';
 import 'package:freelion/colors.dart';
 import 'Layout/home_page.dart';
 
@@ -19,10 +20,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backgroundColor,
       ),
-      home: const HomePage(
-        mobileScreenLayout: MobileScreenLayout(),
-        webScreenLayout: WebScreenLayout(),
-      ),
+      // home: const HomePage(
+      //   mobileScreenLayout: MobileScreenLayout(),
+      //   webScreenLayout: WebScreenLayout(),
+      // ),
+      home: SearchScreen(),
     );
   }
 }
