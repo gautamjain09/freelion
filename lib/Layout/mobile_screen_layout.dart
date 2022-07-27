@@ -13,11 +13,11 @@ class MobileScreenLayout extends StatelessWidget {
         backgroundColor: backgroundColor,
         elevation: 0,
         leading: IconButton(
+          onPressed: () {},
           icon: const Icon(
             Icons.menu,
             color: Colors.grey,
           ),
-          onPressed: () {},
         ),
         title: SizedBox(
           width: MediaQuery.of(context).size.width * 0.30,

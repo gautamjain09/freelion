@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freelion/Services/api_service.dart';
 import 'package:freelion/Support_Widgets/web/search_footer.dart';
 import 'package:freelion/Support_Widgets/web/search_header.dart';
 import 'package:freelion/Support_Widgets/web/search_tabs.dart';
@@ -11,6 +12,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +37,32 @@ class SearchScreen extends StatelessWidget {
 
             // <------------------ Search results --------------------------->
 
-            // < ------------------- Paginationc ------------------------------>
+            FutureBuilder(
+              future: ApiService().fetchData(queryTerm: 'Codeforces'),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 150, top: 12),
+                        child: Text(
+                          "About ${snapshot.data?['searchInformation']['formattedTotalResults']} results in (${snapshot.data?['searchInformation']['formattedSearchTime']}) seconds",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+
+            // < ------------------- Pagination ------------------------------>
 
             SizedBox(
               width: double.infinity,
