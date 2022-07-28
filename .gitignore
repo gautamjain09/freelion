@@ -10,6 +10,10 @@
 .svn/
 migrate_working_dir/
 
+# Google API key
+/api_keys.dart
+/
+
 # IntelliJ related
 *.iml
 *.ipr
