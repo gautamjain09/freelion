@@ -11,8 +11,7 @@
 migrate_working_dir/
 
 # Google API key
-/api_keys.dart
-/
+/lib/config/api_keys.dart
 
 # IntelliJ related
 *.iml

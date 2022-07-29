@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freelion/Services/api_service.dart';
 import 'package:freelion/Support_Widgets/web/search_footer.dart';
 import 'package:freelion/Support_Widgets/web/search_header.dart';
+import 'package:freelion/Support_Widgets/web/search_result_component.dart';
 import 'package:freelion/Support_Widgets/web/search_tabs.dart';
 import 'package:freelion/colors.dart';
 
@@ -50,11 +51,19 @@ class SearchScreen extends StatelessWidget {
                         child: Text(
                           "About ${snapshot.data?['searchInformation']['formattedTotalResults']} results in (${snapshot.data?['searchInformation']['formattedSearchTime']}) seconds",
                           style: const TextStyle(
-                            fontSize: 15,
+                            fontSize: 14,
                             color: Colors.grey,
                           ),
                         ),
                       ),
+                      // ListView.builder(
+                      //   itemBuilder: (context, index) {
+                      //     return const Padding(
+                      //       padding: EdgeInsets.only(left: 150, top: 15),
+                      //       child: SearchResultComponent(),
+                      //     );
+                      //   },
+                      // ),
                     ],
                   );
                 }
