@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freelion/Support_Widgets/web/search_tab.dart';
+import 'package:freelion/Support_Widgets/search_tab.dart';
 
 class SearchTabs extends StatelessWidget {
   const SearchTabs({Key? key}) : super(key: key);

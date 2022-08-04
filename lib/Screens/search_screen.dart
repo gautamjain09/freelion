@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:freelion/Services/api_service.dart';
-import 'package:freelion/Support_Widgets/web/search_footer.dart';
-import 'package:freelion/Support_Widgets/web/search_header.dart';
-import 'package:freelion/Support_Widgets/web/search_result_component.dart';
-import 'package:freelion/Support_Widgets/web/search_tabs.dart';
+import 'package:freelion/Support_Widgets/search_footer.dart';
+import 'package:freelion/Support_Widgets/search_header.dart';
+import 'package:freelion/Support_Widgets/search_result_component.dart';
+import 'package:freelion/Support_Widgets/search_tabs.dart';
 import 'package:freelion/colors.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  final String searchQuery;
+  final String start;
+
+  const SearchScreen({Key? key, required this.searchQuery, required this.start})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
+        // scrollDirection: Axis.vertical,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,9 +30,9 @@ class SearchScreen extends StatelessWidget {
 
             // < ------------------- Search Tabs ------------------------------>
 
-            const Padding(
-              padding: EdgeInsets.only(left: 150),
-              child: SingleChildScrollView(
+            Padding(
+              padding: EdgeInsets.only(left: size.width <= 700 ? 15 : 150),
+              child: const SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: SearchTabs(),
               ),
@@ -39,7 +45,8 @@ class SearchScreen extends StatelessWidget {
             // <------------------ Search results --------------------------->
 
             FutureBuilder(
-              future: ApiService().fetchData(queryTerm: 'Codeforces'),
+              future:
+                  ApiService().fetchData(queryTerm: searchQuery, start: start),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   return Column(
@@ -47,7 +54,10 @@ class SearchScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(left: 150, top: 12),
+                        padding: EdgeInsets.only(
+                          left: size.width <= 700 ? 15 : 150,
+                          top: 12,
+                        ),
                         child: Text(
                           "About ${snapshot.data?['searchInformation']['formattedTotalResults']} results in (${snapshot.data?['searchInformation']['formattedSearchTime']}) seconds",
                           style: const TextStyle(
@@ -56,51 +66,88 @@ class SearchScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // ListView.builder(
-                      //   itemBuilder: (context, index) {
-                      //     return const Padding(
-                      //       padding: EdgeInsets.only(left: 150, top: 15),
-                      //       child: SearchResultComponent(),
-                      //     );
-                      //   },
-                      // ),
+                      ListView.builder(
+                        itemCount: snapshot.data?['items'].length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                left: size.width <= 700 ? 15 : 150, top: 15),
+                            child: SearchResultComponent(
+                              link: snapshot.data?['items'][index]
+                                  ['formattedUrl'],
+                              text: snapshot.data?['items'][index]['title'],
+                              linkToGo: snapshot.data?['items'][index]['link'],
+                              description: snapshot.data?['items'][index]
+                                  ['snippet'],
+                            ),
+                          );
+                        },
+                      ),
+
+                      // < ------------------- Pagination ------------------------------>
+
+                      SizedBox(
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                if (start != "0") {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: ((context) {
+                                        return SearchScreen(
+                                            searchQuery: searchQuery,
+                                            // Gives the previous 10 results
+                                            start: (int.parse(start) - 10)
+                                                .toString());
+                                      }),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: const Text(
+                                "< Previous",
+                                style:
+                                    TextStyle(fontSize: 16, color: blueColor),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: ((context) {
+                                      return SearchScreen(
+                                          searchQuery: searchQuery,
+                                          // Gives the Next 10 results
+                                          start: (int.parse(start) + 10)
+                                              .toString());
+                                    }),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                "Next >",
+                                style:
+                                    TextStyle(fontSize: 16, color: blueColor),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // <---------------------- Search Footer -------------------------->
+                      const SearchFooter(),
                     ],
                   );
                 }
                 return const Center(child: CircularProgressIndicator());
               },
             ),
-
-            // < ------------------- Pagination ------------------------------>
-
-            SizedBox(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "< Previous",
-                      style: TextStyle(fontSize: 16, color: blueColor),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Next >",
-                      style: TextStyle(fontSize: 16, color: blueColor),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // <---------------------- Search Footer -------------------------->
-
-            const SearchFooter(),
           ],
         ),
       ),

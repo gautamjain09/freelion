@@ -15,7 +15,8 @@ class SearchHeader extends StatelessWidget {
       child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 5, right: 15, left: 10),
+            padding: EdgeInsets.only(
+                top: 5, right: 20, left: size.width <= 700 ? 15 : 140),
             child: Image.asset(
               "assets/images/google-logo.png",
               height: 30,
@@ -28,10 +29,22 @@ class SearchHeader extends StatelessWidget {
             width: size.width * 0.4,
             decoration: BoxDecoration(
               color: searchColor,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(30),
               border: Border.all(color: searchColor),
             ),
             child: TextFormField(
+              onFieldSubmitted: (value) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: ((context) {
+                      return SearchScreen(
+                        searchQuery: value,
+                        start: '0',
+                      );
+                    }),
+                  ),
+                );
+              },
               style: const TextStyle(color: Colors.white, fontSize: 16),
               textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:freelion/Screens/search_screen.dart';
 import 'package:freelion/colors.dart';
 
 class webSearch extends StatelessWidget {
@@ -24,6 +25,15 @@ class webSearch extends StatelessWidget {
         SizedBox(
           width: (size.width <= 700) ? size.width * 0.7 : size.width * 0.4,
           child: TextFormField(
+            onFieldSubmitted: (value) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: ((context) {
+                    return SearchScreen(searchQuery: value, start: '0');
+                  }),
+                ),
+              );
+            },
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
