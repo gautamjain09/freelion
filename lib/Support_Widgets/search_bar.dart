@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freelion/Screens/search_screen.dart';
 import 'package:freelion/colors.dart';
 
-class webSearch extends StatelessWidget {
-  const webSearch({Key? key}) : super(key: key);
+class searchBar extends StatelessWidget {
+  const searchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class webSearch extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.35,
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         SizedBox(
           width: (size.width <= 700) ? size.width * 0.7 : size.width * 0.4,
           child: TextFormField(
@@ -36,18 +36,18 @@ class webSearch extends StatelessWidget {
             },
             decoration: InputDecoration(
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(35),
                 borderSide: const BorderSide(color: searchBorder),
               ),
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10),
                 child: SvgPicture.asset(
                   "assets/images/search-icon.svg",
                   color: searchBorder,
                 ),
               ),
               suffixIcon: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10),
                 child: SvgPicture.asset(
                   "assets/images/mic-icon.svg",
                 ),

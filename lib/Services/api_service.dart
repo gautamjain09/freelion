@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-  bool isTestingData = true;
+  bool isTestingData = false;
 
   Future<Map<String, dynamic>> fetchData(
       {required String queryTerm, String start = "0"}) async {
@@ -13,7 +13,7 @@ class ApiService {
         String q = queryTerm.contains(" ")
             ? queryTerm.split(' ').join('%10')
             : queryTerm;
-        // let say we search "Codeforces contest" then it will mean array of two element
+        // let say we search "atcoder contest" then it will mean array of two element
         // atcoder%20contest
 
         final response = await http.get(Uri.parse(
@@ -26,6 +26,7 @@ class ApiService {
         }
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
     }
 

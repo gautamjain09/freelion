@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:freelion/Support_Widgets/link_text.dart';
 import 'package:freelion/colors.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class SearchResultComponent extends StatefulWidget {
+class SearchResultComponent extends StatelessWidget {
   final String link;
   final String text;
   final String linkToGo;
@@ -17,68 +18,36 @@ class SearchResultComponent extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<SearchResultComponent> createState() => _SearchResultComponentState();
-}
-
-class _SearchResultComponentState extends State<SearchResultComponent> {
-  bool _showUnderline = false;
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 7),
-          child: InkWell(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            hoverColor: Colors.transparent,
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: LinkText(
+            link: link,
+            text: text,
+            textStyle: const TextStyle(
+              color: blueColor,
+              fontSize: 20,
+            ),
             onTap: () async {
-              if (await canLaunchUrlString(widget.linkToGo)) {
-                await launchUrlString(widget.linkToGo);
+              if (await canLaunchUrlString(linkToGo)) {
+                await launchUrlString(linkToGo);
               }
             },
-            onHover: (hovering) {
-              setState(() {
-                _showUnderline = hovering;
-              });
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.link,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  widget.text,
-                  style: TextStyle(
-                      color: blueColor,
-                      fontSize: 20,
-                      decoration: _showUnderline
-                          ? TextDecoration.underline
-                          : TextDecoration.none),
-                ),
-              ],
-            ),
           ),
         ),
         Text(
-          widget.description,
+          description,
           style: const TextStyle(
-            fontSize: 15,
+            fontSize: 14,
             color: Colors.grey,
           ),
         ),
         const SizedBox(
-          height: 15,
+          height: 10,
         )
       ],
     );

@@ -24,7 +24,6 @@ class MobileScreenLayout extends StatelessWidget {
           child: const DefaultTabController(
             length: 2,
             child: TabBar(
-              // labelColor: blueColor,
               unselectedLabelColor: Colors.grey,
               indicatorColor: blueColor,
               tabs: [
@@ -45,10 +44,9 @@ class MobileScreenLayout extends StatelessWidget {
             child: MaterialButton(
               onPressed: () {},
               color: Colors.indigo,
-              padding: const EdgeInsets.all(15),
               child: const Text(
                 "Sign In",
-                style: TextStyle(color: primaryColor),
+                style: TextStyle(fontSize: 11, color: primaryColor),
               ),
             ),
           )
@@ -59,7 +57,7 @@ class MobileScreenLayout extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 4),
-            const webSearch(),
+            const searchBar(),
           ],
         ),
       ),

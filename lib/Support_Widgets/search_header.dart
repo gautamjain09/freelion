@@ -16,7 +16,7 @@ class SearchHeader extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(
-                top: 5, right: 20, left: size.width <= 700 ? 15 : 140),
+                top: 0, right: 20, left: size.width <= 700 ? 15 : 140),
             child: Image.asset(
               "assets/images/google-logo.png",
               height: 30,

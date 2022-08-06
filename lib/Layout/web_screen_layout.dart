@@ -59,7 +59,7 @@ class WebScreenLayout extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 4),
-            const webSearch(),
+            const searchBar(),
           ],
         ),
       ),
